@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Categories LIST - Hangarin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">List of Categories</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form class="d-flex" action="">
+                            <input type="text" placeholder="Search..." class="form-control me-2" />
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="{% url 'category-add' %}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add Category
+                        </a>
+                    </div>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in object_list %}
+                        <tr>
+                            <td>{{ category.name }}</td>
+                            <td>{{ category.created_at|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'category-update' category.id %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'category-delete' category.id %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">No categories found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% include 'includes/pagination.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

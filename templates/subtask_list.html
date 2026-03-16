@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SubTasks - Hangarin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">List of SubTasks</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form class="d-flex" action="{% url 'subtask-list' %}">
+                            <input type="text" name="q" placeholder="Search..." class="form-control me-2" value="{{ request.GET.q }}">
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="{% url 'subtask-add' %}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Add SubTask
+                        </a>
+                    </div>
+                </div>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Parent Task</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subtask in subtasks %}
+                        <tr>
+                            <td>{{ subtask.title }}</td>
+                            <td>{{ subtask.status }}</td>
+                            <td>{{ subtask.parent_task }}</td>
+                            <td>
+                                <a href="{% url 'subtask-update' subtask.id %}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="{% url 'subtask-delete' subtask.id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No SubTasks found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                {% include 'includes/pagination.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
