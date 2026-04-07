@@ -22,6 +22,7 @@ from tasks.auth_views import CustomLoginView, CustomLogoutView  # Correct import
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('pwa.urls')),
 
     # Allauth URLs (optional if using social login)
     path('accounts/', include('allauth.urls')),
